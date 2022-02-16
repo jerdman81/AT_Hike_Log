@@ -80,6 +80,39 @@ namespace HikeLog.Services
                     };
             }
         }
+
+        public bool UpdateProfile(ProfileEdit model)
+        {
+            using(var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                        .Profiles
+                        .Single(e => e.ProfileId == model.ProfileId && e.UserId == _userId);
+
+                entity.FirstName = model.FirstName;
+                entity.LastName = model.LastName;
+                entity.TrailName = model.TrailName;
+                entity.Hometown = model.Hometown;
+                entity.UpdatedUtc = DateTimeOffset.UtcNow;
+
+                return ctx.SaveChanges() == 1;
+            }
+        }
+
+        public bool DeleteProfile(int profileId)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                        .Profiles
+                        .Single(e => e.ProfileId == profileId && e.UserId == _userId);
+
+                ctx.Profiles.Remove(entity);
+                return ctx.SaveChanges() == 1;
+            }
+        }
         
     }
 }
