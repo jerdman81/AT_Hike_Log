@@ -65,7 +65,7 @@ namespace HikeLog.Services
             {
                 var entity =
                     ctx
-                        .Notes
+                        .Profiles
                         .Single(e => e.ProfileId == id && e.UserId == _userId);
                 return
                     new ProfileDetail
