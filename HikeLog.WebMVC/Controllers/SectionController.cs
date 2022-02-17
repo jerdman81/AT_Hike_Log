@@ -62,6 +62,7 @@ namespace HikeLog.WebMVC.Controllers
             var model =
                 new SectionEdit
                 {
+                    SectionId = detail.SectionId,
                     SectionName = detail.SectionName,
                     StartDate = detail.StartDate,
                     EndDate = detail.EndDate,
