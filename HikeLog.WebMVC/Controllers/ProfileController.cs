@@ -5,7 +5,6 @@ using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -36,7 +35,7 @@ namespace HikeLog.WebMVC.Controllers
             
             var service = CreateProfileService();
 
-            if (service.CreateProflie(model))
+            if (service.CreateProfile(model))
             {
                 TempData["SaveResult"] = "Your Profile was created!";
                 return RedirectToAction("Index");

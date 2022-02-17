@@ -18,7 +18,7 @@ namespace HikeLog.Services
             _userId = userId;
         }
 
-        public bool CreateProflie(ProfileCreate model)
+        public bool CreateProfile(ProfileCreate model)
         {
             var entity =
                 new Profile()
