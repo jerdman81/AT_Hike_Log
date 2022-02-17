@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HikeLog.Models
+namespace HikeLog.Models.Profile
 {
     public class ProfileListItem
     {

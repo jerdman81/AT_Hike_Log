@@ -1,0 +1,81 @@
+﻿@model IEnumerable<HikeLog.Models.Section.SectionListItem>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SectionId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProfileId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SectionName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EndDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StartMile)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EndMile)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Direction)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedUtc)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.SectionId)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.ProfileId)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.SectionName)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.StartDate)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.EndDate)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.StartMile)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.EndMile)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Direction)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.CreatedUtc)
+    </td>
+    <td>
+        @Html.ActionLink("Edit", "Edit", new { id = item.SectionId }) |
+        @Html.ActionLink("Details", "Details", new { id = item.SectionId }) |
+        @Html.ActionLink("Delete", "Delete", new { id = item.SectionId })
+    </td>
+</tr>
+}
+
+</table>
