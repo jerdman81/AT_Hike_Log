@@ -27,6 +27,7 @@ namespace HikeLog.Services
                     FirstName = model.FirstName,
                     LastName = model.LastName,
                     TrailName = model.TrailName,
+                    Hometown = model.Hometown,
                     CreatedUtc = DateTimeOffset.Now
                 };
 
@@ -50,7 +51,9 @@ namespace HikeLog.Services
                                 new ProfileListItem
                                 {
                                     ProfileId = e.ProfileId,
-                                    FullName = e.FullName,
+                                    TrailName= e.TrailName,
+                                    FirstName = e.FirstName,
+                                    LastName = e.LastName,
                                     CreatedUtc = e.CreatedUtc
                                 }
                         );

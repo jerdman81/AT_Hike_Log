@@ -32,7 +32,7 @@ namespace HikeLog.WebMVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(ProfileCreate model)
         {
-            if (ModelState.IsValid) return View(model);
+            if (!ModelState.IsValid) return View(model);
             
             var service = CreateProfileService();
 
@@ -109,7 +109,7 @@ namespace HikeLog.WebMVC.Controllers
         public ActionResult DeletePost(int id)
         {
             var service = CreateProfileService();
-            service.DeleteNote(id);
+            service.DeleteProfile(id);
             TempData["SaveResult"] = "Your Profile was deleted";
             return RedirectToAction("Index");
         }
