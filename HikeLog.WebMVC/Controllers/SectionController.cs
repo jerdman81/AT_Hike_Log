@@ -47,6 +47,74 @@ namespace HikeLog.WebMVC.Controllers
             return View(model);
         }
 
+        public ActionResult Details(int id)
+        {
+            var svc = CreateSectionService();
+            var model = svc.GetSectionById(id);
+
+            return View(model);
+        }
+
+        public ActionResult Edit(int id)
+        {
+            var service = CreateSectionService();
+            var detail = service.GetSectionById(id);
+            var model =
+                new SectionEdit
+                {
+                    SectionName = detail.SectionName,
+                    StartDate = detail.StartDate,
+                    EndDate = detail.EndDate,
+                    StartMile = detail.StartMile,
+                    EndMile = detail.EndMile,
+                    Direction = detail.Direction
+                };
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(int id, SectionEdit model)
+        {
+            if (!ModelState.IsValid) return View(model);
+            if(model.SectionId != id)
+            {
+                ModelState.AddModelError("", "Id Mismatch");
+                return View(model);
+            }
+
+            var service = CreateSectionService();
+
+            if (service.UpdateSection(model))
+            {
+                TempData["SaveResult"] = "Your Section was updated.";
+                return RedirectToAction("Index");
+            }
+
+            ModelState.AddModelError("", "Your Section could not be updated.");
+            return View(model);
+        }
+
+        [ActionName("Delete")]
+        public ActionResult Delete(int id)
+        {
+            var svc = CreateSectionService();
+            var model = svc.GetSectionById(id);
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeletePost(int id)
+        {
+            var service = CreateSectionService();
+            service.DeleteSection(id);
+            TempData["SaveResult"] = "Your Section was deleted";
+            return RedirectToAction("Index");
+        }
+
         private SectionService CreateSectionService()
         {
             var userId = Guid.Parse(User.Identity.GetUserId());

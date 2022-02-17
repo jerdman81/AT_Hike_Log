@@ -67,5 +67,65 @@ namespace HikeLog.Services
             }
         }
 
+        public SectionDetail GetSectionById(int id)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                        .Sections
+                        .Single(e => e.SectionId == id);
+                return
+                    new SectionDetail
+                    {
+                        SectionId = entity.SectionId,
+                        ProfileId = entity.ProfileId,
+                        SectionName = entity.SectionName,
+                        StartDate = entity.StartDate,
+                        EndDate = entity.EndDate,
+                        StartMile = entity.StartMile,
+                        EndMile = entity.EndMile,
+                        Direction = entity.Direction,
+                        CreatedUtc = entity.CreatedUtc,
+                        ModifiedUtc = entity.ModifiedUtc
+                    };
+            }
+        }
+
+        public bool UpdateSection(SectionEdit model)
+        {
+            using(var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                        .Sections
+                        .Single(e => e.SectionId == model.SectionId);
+
+                entity.SectionName = model.SectionName;
+                entity.StartDate = model.StartDate;
+                entity.EndDate = model.EndDate;
+                entity.StartMile = model.StartMile;
+                entity.EndMile = model.EndMile;
+                entity.Direction = model.Direction;
+                entity.ModifiedUtc = DateTimeOffset.UtcNow;
+
+                return ctx.SaveChanges() == 1;
+            }
+        }
+
+        public bool DeleteSection(int sectionId)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                        .Sections
+                        .Single(e => e.SectionId == sectionId);
+
+                ctx.Sections.Remove(entity);
+                return ctx.SaveChanges() == 1;
+            }
+        }
+
     }
 }
