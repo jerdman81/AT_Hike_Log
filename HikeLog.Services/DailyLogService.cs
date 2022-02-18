@@ -17,6 +17,28 @@ namespace HikeLog.Services
             _userid = userId;
         }
 
+        public bool CreateDailyLog(DailyLogCreate model)
+        {
+            var entity =
+                new DailyLog()
+                {
+                    ProfileId = model.ProfileId,
+                    SectionId = model.SectionId,
+                    Date = model.Date,
+                    StartMile = model.StartMile,
+                    EndMile = model.EndMile,
+                    Notes = model.Notes,
+                    IsStarred = model.IsStarred,
+                    CreatedUtc = DateTimeOffset.UtcNow
+                };
+
+            using (var ctx = new ApplicationDbContext())
+            {
+                ctx.DailyLogs.Add(entity);
+                return ctx.SaveChanges() == 1;
+            }
+        }
+
         public IEnumerable<DailyLogListItem> GetDailyLogs()
         {
             using (var ctx = new ApplicationDbContext())
