@@ -57,6 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DailyLog\DailyLogListItem.cs" />
     <Compile Include="Profile\ProfileCreate.cs" />
     <Compile Include="Profile\ProfileDetail.cs" />
     <Compile Include="Profile\ProfileEdit.cs" />
