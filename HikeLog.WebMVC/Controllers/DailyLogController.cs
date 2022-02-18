@@ -99,6 +99,26 @@ namespace HikeLog.WebMVC.Controllers
             return View(model);
         }
 
+        [ActionName("Delete")]
+        public ActionResult Delete(int id)
+        {
+            var svc = CreateDailyLogService();
+            var model = svc.GetDailyLogById(id);
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeletePost(int id)
+        {
+            var service = CreateDailyLogService();
+            service.DeleteDailyLog(id);
+            TempData["SaveResult"] = "Your DailyLog was deleted";
+            return RedirectToAction("Index");
+        }
+
 
         private DailyLogService CreateDailyLogService()
         {

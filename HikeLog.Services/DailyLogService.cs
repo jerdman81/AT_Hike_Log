@@ -112,5 +112,19 @@ namespace HikeLog.Services
                 return ctx.SaveChanges() == 1;
             }
         }
+
+        public bool DeleteDailyLog(int dailyLogId)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                        .DailyLogs
+                        .Single(e => e.DailyLogId == dailyLogId);
+
+                ctx.DailyLogs.Remove(entity);
+                return ctx.SaveChanges() == 1;
+            }
+        }
     }
 }
