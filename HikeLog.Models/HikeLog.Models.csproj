@@ -57,6 +57,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DailyLog\DailyLogCreate.cs" />
+    <Compile Include="DailyLog\DailyLogDetail.cs" />
+    <Compile Include="DailyLog\DailyLogEdit.cs" />
+    <Compile Include="DailyLog\DailyLogListItem.cs" />
     <Compile Include="Profile\ProfileCreate.cs" />
     <Compile Include="Profile\ProfileDetail.cs" />
     <Compile Include="Profile\ProfileEdit.cs" />

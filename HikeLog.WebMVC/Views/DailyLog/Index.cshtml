@@ -1,0 +1,87 @@
+﻿@model IEnumerable<HikeLog.Models.DailyLog.DailyLogListItem>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.DailyLogId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProfileId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SectionId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StartMile)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EndMile)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MilesHiked)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Notes)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsStarred)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedUtc)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.DailyLogId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProfileId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SectionId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Date)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StartMile)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EndMile)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MilesHiked)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Notes)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsStarred)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreatedUtc)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.DailyLogId }) |
+            @Html.ActionLink("Details", "Details", new { id = item.DailyLogId }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.DailyLogId })
+        </td>
+    </tr>
+}
+
+</table>
