@@ -64,5 +64,31 @@ namespace HikeLog.Services
                 return query.ToArray();
             }
         }
+
+        public DailyLogDetail GetDailyLogById(int id)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                        .DailyLogs
+                        .Single(e => e.DailyLogId == id);
+                return
+                    new DailyLogDetail
+                    {
+                        DailyLogId = entity.DailyLogId,
+                        ProfileId = entity.ProfileId,
+                        SectionId = entity.SectionId,
+                        Date = entity.Date,
+                        StartMile = entity.StartMile,
+                        EndMile = entity.EndMile,
+                        Notes = entity.Notes,
+                        IsStarred = entity.IsStarred,
+                        CreatedUtc = entity.CreatedUtc,
+                        ModifiedUtc = entity.ModifiedUtc
+                    };
+            }
+
+        }
     }
 }

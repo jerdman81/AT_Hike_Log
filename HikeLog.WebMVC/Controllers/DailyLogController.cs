@@ -47,6 +47,14 @@ namespace HikeLog.WebMVC.Controllers
             return View(model);
         }
 
+        public ActionResult Details(int id)
+        {
+            var svc = CreateDailyLogService();
+            var model = svc.GetDailyLogById(id);
+
+            return View(model);
+        }
+
 
         private DailyLogService CreateDailyLogService()
         {

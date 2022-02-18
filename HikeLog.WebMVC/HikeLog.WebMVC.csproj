@@ -253,6 +253,7 @@
     <Content Include="Views\Section\Delete.cshtml" />
     <Content Include="Views\DailyLog\Index.cshtml" />
     <Content Include="Views\DailyLog\Create.cshtml" />
+    <Content Include="Views\DailyLog\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
