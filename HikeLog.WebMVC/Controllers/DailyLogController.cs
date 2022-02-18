@@ -55,6 +55,50 @@ namespace HikeLog.WebMVC.Controllers
             return View(model);
         }
 
+        public ActionResult Edit(int id)
+        {
+            var service = CreateDailyLogService();
+            var detail = service.GetDailyLogById(id);
+            var model =
+                new DailyLogEdit
+                {
+                    DailyLogId = detail.DailyLogId,
+                    ProfileId = detail.ProfileId,
+                    SectionId = detail.SectionId,
+                    Date = detail.Date,
+                    StartMile = detail.StartMile,
+                    EndMile = detail.EndMile,
+                    Notes = detail.Notes,
+                    IsStarred = detail.IsStarred
+
+                };
+            return View(model);
+        }
+
+       [HttpPost]
+       [ValidateAntiForgeryToken]
+
+       public ActionResult Edit(int id, DailyLogEdit model)
+        {
+            if (!ModelState.IsValid) return View(model);
+            if(model.DailyLogId != id)
+            {
+                ModelState.AddModelError("", "Id Mismatch");
+                return View(model);
+            }
+
+            var service = CreateDailyLogService();
+
+            if (service.UpdateDailyLog(model))
+            {
+                TempData["SaveResult"] = "Your DailyLog was updated.";
+                return RedirectToAction("Index");
+            }
+
+            ModelState.AddModelError("", "Your DailyLog could not be updated.");
+            return View(model);
+        }
+
 
         private DailyLogService CreateDailyLogService()
         {

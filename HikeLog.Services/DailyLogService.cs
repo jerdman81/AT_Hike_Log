@@ -88,7 +88,29 @@ namespace HikeLog.Services
                         ModifiedUtc = entity.ModifiedUtc
                     };
             }
+        }
 
+        public bool UpdateDailyLog(DailyLogEdit model)
+        {
+            using(var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                        .DailyLogs
+                        .Single(e => e.DailyLogId == model.DailyLogId);
+
+                entity.DailyLogId = model.DailyLogId;
+                entity.ProfileId = model.ProfileId;
+                entity.SectionId = model.SectionId;
+                entity.Date = model.Date;
+                entity.StartMile = model.StartMile;
+                entity.EndMile = model.EndMile;
+                entity.Notes = model.Notes;
+                entity.IsStarred = model.IsStarred;
+                entity.ModifiedUtc = DateTimeOffset.UtcNow;
+
+                return ctx.SaveChanges() == 1;
+            }
         }
     }
 }
