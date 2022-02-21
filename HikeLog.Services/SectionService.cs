@@ -92,6 +92,29 @@ namespace HikeLog.Services
             }
         }
 
+        public IEnumerable<SectionListItem> GetSectionByName(string name)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                    .Sections.Where(s => s.SectionName.ToLower().Contains(name.ToLower()))
+                    .Select(s => new SectionListItem
+                    {
+                        SectionId = s.SectionId,
+                        ProfileId = s.ProfileId,
+                        SectionName = s.SectionName,
+                        StartDate = s.StartDate,
+                        EndDate = s.EndDate,
+                        StartMile = s.StartMile,
+                        EndMile = s.EndMile,
+                        Direction = s.Direction,
+                        CreatedUtc = s.CreatedUtc,
+                    });
+                return entity.ToList();
+            }
+        }
+
         public bool UpdateSection(SectionEdit model)
         {
             using(var ctx = new ApplicationDbContext())

@@ -54,7 +54,7 @@ namespace HikeLog.WebMVC.Controllers
 
             return View(model);
         }
-
+                
         public ActionResult Edit(int id)
         {
             var service = CreateSectionService();
