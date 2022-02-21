@@ -92,13 +92,84 @@ namespace HikeLog.Services
             }
         }
 
-        public IEnumerable<SectionListItem> GetSectionByName(string name)
+        public IEnumerable<SectionListItem> GetSectionByName(string search)
         {
             using (var ctx = new ApplicationDbContext())
             {
                 var entity =
                     ctx
-                    .Sections.Where(s => s.SectionName.ToLower().Contains(name.ToLower()))
+                    .Sections.Where(s => s.SectionName.ToLower().Contains(search.ToLower()))
+                    .Select(s => new SectionListItem
+                    {
+                        SectionId = s.SectionId,
+                        ProfileId = s.ProfileId,
+                        SectionName = s.SectionName,
+                        StartDate = s.StartDate,
+                        EndDate = s.EndDate,
+                        StartMile = s.StartMile,
+                        EndMile = s.EndMile,
+                        Direction = s.Direction,
+                        CreatedUtc = s.CreatedUtc,
+                    });
+                return entity.ToList();
+            }
+        }
+
+        public IEnumerable<SectionListItem> GetSectionByDirection(string search)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                    .Sections.Where(s => s.Direction.ToString().ToLower().Contains(search.ToLower()))
+                    .Select(s => new SectionListItem
+                    {
+                        SectionId = s.SectionId,
+                        ProfileId = s.ProfileId,
+                        SectionName = s.SectionName,
+                        StartDate = s.StartDate,
+                        EndDate = s.EndDate,
+                        StartMile = s.StartMile,
+                        EndMile = s.EndMile,
+                        Direction = s.Direction,
+                        CreatedUtc = s.CreatedUtc,
+                    });
+                return entity.ToList();
+            }
+        }
+        public IEnumerable<SectionListItem> GetSectionByDate(string search)
+        {
+
+            DateTimeOffset inputDate = DateTimeOffset.Parse(search);
+            using (var ctx = new ApplicationDbContext())
+            {
+                
+                var entity =
+                    ctx
+                    .Sections.Where(s => s.EndDate >= inputDate && s.StartDate <= inputDate)
+                    .Select(s => new SectionListItem
+                    {
+                        SectionId = s.SectionId,
+                        ProfileId = s.ProfileId,
+                        SectionName = s.SectionName,
+                        StartDate = s.StartDate,
+                        EndDate = s.EndDate,
+                        StartMile = s.StartMile,
+                        EndMile = s.EndMile,
+                        Direction = s.Direction,
+                        CreatedUtc = s.CreatedUtc,
+                    });
+                return entity.ToList();
+            }
+        }
+        public IEnumerable<SectionListItem> GetSectionByMM(string search)
+        {
+            double milemarker = Convert.ToDouble(search);
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                    .Sections.Where(s => s.EndMile >= milemarker && s.StartMile <= milemarker)
                     .Select(s => new SectionListItem
                     {
                         SectionId = s.SectionId,

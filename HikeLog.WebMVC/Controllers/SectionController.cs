@@ -14,11 +14,34 @@ namespace HikeLog.WebMVC.Controllers
     public class SectionController : Controller
     {
         // GET: Section
-        public ActionResult Index()
+        public ActionResult Index(string option, string search)
         {
             var service = CreateSectionService();
-            var model = service.GetSections();
-            return View(model);
+            if (option == "Name")
+            {
+                var model = service.GetSectionByName(search);
+                return View(model);
+            }
+            else if (option == "Direction")
+            {
+                var model = service.GetSectionByDirection(search);
+                return View(model);
+            }
+            else if (option == "Date")
+            {
+                var model = service.GetSectionByDate(search);
+                return View(model);
+            }
+            else if (option == "Mile Marker")
+            {
+                var model = service.GetSectionByMM(search);
+                return View(model);
+            }
+            else
+            {
+                var model = service.GetSections();
+                return View(model);
+            }
         }
 
         // GET : Section
