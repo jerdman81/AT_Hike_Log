@@ -98,7 +98,7 @@ namespace HikeLog.Services
             {
                 var entity =
                     ctx
-                    .Sections.Where(s => s.SectionName.ToLower().Contains(search.ToLower()))
+                    .Sections.Where(s => s.SectionName.ToLower().Contains(search.ToLower()) || search == null)
                     .Select(s => new SectionListItem
                     {
                         SectionId = s.SectionId,
@@ -139,6 +139,7 @@ namespace HikeLog.Services
         }
         public IEnumerable<SectionListItem> GetSectionByDate(string search)
         {
+            if (search == "") return GetSections();
 
             DateTimeOffset inputDate = DateTimeOffset.Parse(search);
             using (var ctx = new ApplicationDbContext())
@@ -164,7 +165,10 @@ namespace HikeLog.Services
         }
         public IEnumerable<SectionListItem> GetSectionByMM(string search)
         {
+            if (search == "") return GetSections();
+            
             double milemarker = Convert.ToDouble(search);
+            
             using (var ctx = new ApplicationDbContext())
             {
                 var entity =

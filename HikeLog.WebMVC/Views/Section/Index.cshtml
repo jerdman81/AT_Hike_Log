@@ -4,10 +4,13 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Section Index</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
+</p>
+<p>
+    @Html.ActionLink("Reset View", "Index")
 </p>
 
 @using (Html.BeginForm("Index", "Section", FormMethod.Get))
@@ -16,7 +19,7 @@
     @Html.RadioButton("option", "Date") <text>Date</text> @Html.RadioButton("option", "Mile Marker") <text>Mile Marker</text>
     @Html.TextBox("search") <input type="submit" name="submit" value="Search" />
 }
-<br />
+<br>
 <table class="table">
     <tr>
         <th>
@@ -49,42 +52,49 @@
         <th></th>
     </tr>
 
-    @foreach (var item in Model)
+    @if (Model.Count() == 0)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.SectionId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProfileId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SectionName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StartDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EndDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StartMile)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EndMile)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Direction)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedUtc)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.SectionId }) |
-                @Html.ActionLink("Details", "Details", new { id = item.SectionId }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.SectionId })
-            </td>
-        </tr>
+        <tr> <td colspan="3"> No Records Found! </td></tr>
+    }
+    else
+    {
+        foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SectionId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProfileId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SectionName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartMile)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndMile)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Direction)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedUtc)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.SectionId }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.SectionId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.SectionId })
+                </td>
+            </tr>
+        }
     }
 
 </table>
