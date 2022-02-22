@@ -79,5 +79,43 @@ namespace HikeLog.Services
             }
         }
 
+        public double EstimatedDaysToCompleteSection(int sectionId)
+        {
+            
+            using (var ctx = new ApplicationDbContext())
+            {
+                if (
+                    Convert.ToDouble(ctx.Sections.Where(s => s.SectionId == sectionId).Select(d => d.EndMile)) 
+                    > 
+                    Convert.ToDouble(ctx.Sections.Where(s => s.SectionId == sectionId).Select(d => d.StartMile)))
+                {
+                    var milesRemaining =
+                        Convert.ToDouble(ctx.Sections.Where(s => s.SectionId == sectionId).Select(d => d.EndMile))
+                        -
+                        ctx.DailyLogs.Where(d => d.SectionId == sectionId).Max(m => m.EndMile);
+                    
+                    var pace = AvgMPDSectionActual(sectionId);
+
+                    var days = Math.Round(milesRemaining / pace, 1);
+
+                    return days;
+                }
+                else
+                {
+                    var milesRemaining =
+                         Convert.ToDouble(ctx.Sections.Where(s => s.SectionId == sectionId).Select(d => d.EndMile))
+                         -
+                         ctx.DailyLogs.Where(d => d.SectionId == sectionId).Min(m => m.EndMile);
+                    
+                    var pace = AvgMPDSectionActual(sectionId);
+
+                    var days = Math.Round(milesRemaining / pace, 1);
+
+                    return days;
+                };
+                               
+            }
+        }
+
     }
 }
