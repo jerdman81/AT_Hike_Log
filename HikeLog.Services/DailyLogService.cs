@@ -90,6 +90,160 @@ namespace HikeLog.Services
             }
         }
 
+        public IEnumerable<DailyLogListItem> GetDailyLogByMilesHiked(string search) 
+        {
+            if (search == "") return GetDailyLogs();
+
+            double milesHiked = Convert.ToDouble(search);
+
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                    .DailyLogs.AsEnumerable()
+                    .Where(d => IsMilesHiked(d, milesHiked))
+                    .Select(d =>
+                       new DailyLogListItem
+                        {
+                            DailyLogId = d.DailyLogId,
+                            ProfileId = d.ProfileId,
+                            SectionId = d.SectionId,
+                            Date = d.Date,
+                            StartMile = d.StartMile,
+                            EndMile = d.EndMile,
+                            Notes = d.Notes,
+                            IsStarred = d.IsStarred,
+                            CreatedUtc = d.CreatedUtc
+                        }
+                       );
+                return entity.ToList();
+            }
+        }
+
+        public static bool IsMilesHiked(DailyLog n, double milesHiked)
+        {
+            return n.MilesHiked == milesHiked;
+        }
+
+        public IEnumerable<DailyLogListItem> GetDailyLogByDate(string search)
+        {
+            if (search == "") return GetDailyLogs();
+
+            DateTimeOffset inputDate = DateTimeOffset.Parse(search);
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                    .DailyLogs.Where(d => d.Date == inputDate)
+                    .Select(d => new DailyLogListItem
+                    {
+                        DailyLogId = d.DailyLogId,
+                        ProfileId=d.ProfileId,
+                        SectionId=d.SectionId,
+                        Date=d.Date,
+                        StartMile=d.StartMile,
+                        EndMile=d.EndMile,
+                        Notes=d.Notes,
+                        IsStarred=d.IsStarred,
+                        CreatedUtc=d.CreatedUtc
+                    });
+                return entity.ToList();
+            }
+        }
+        public IEnumerable<DailyLogListItem> GetDailyLogByMileMarker(string search)
+        {
+            if (search == "") return GetDailyLogs();
+
+            double milemarker = Convert.ToDouble(search);
+
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                    .DailyLogs.Where(d => d.EndMile >= milemarker && d.StartMile <= milemarker)
+                    .Select(d => new DailyLogListItem
+                    {
+                        DailyLogId = d.DailyLogId,
+                        ProfileId = d.ProfileId,
+                        SectionId = d.SectionId,
+                        Date = d.Date,
+                        StartMile = d.StartMile,
+                        EndMile = d.EndMile,
+                        Notes = d.Notes,
+                        IsStarred = d.IsStarred,
+                        CreatedUtc = d.CreatedUtc
+                    });
+                return entity.ToList();
+            }
+        }
+        public IEnumerable<DailyLogListItem> GetDailyLogByHasNotes(string search)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                    .DailyLogs.Where(d => d.Notes != null)
+                    .Select(d => new DailyLogListItem
+                    {
+                        DailyLogId = d.DailyLogId,
+                        ProfileId = d.ProfileId,
+                        SectionId = d.SectionId,
+                        Date = d.Date,
+                        StartMile = d.StartMile,
+                        EndMile = d.EndMile,
+                        Notes = d.Notes,
+                        IsStarred = d.IsStarred,
+                        CreatedUtc = d.CreatedUtc
+                    });
+                return entity.ToList();
+            }
+        }
+        public IEnumerable<DailyLogListItem> GetDailyLogByNoteContent(string search)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                    .DailyLogs.Where(d => d.Notes.Contains(search.ToLower()))
+                    .Select(d => new DailyLogListItem
+                    {
+                        DailyLogId = d.DailyLogId,
+                        ProfileId = d.ProfileId,
+                        SectionId = d.SectionId,
+                        Date = d.Date,
+                        StartMile = d.StartMile,
+                        EndMile = d.EndMile,
+                        Notes = d.Notes,
+                        IsStarred = d.IsStarred,
+                        CreatedUtc = d.CreatedUtc
+                    });
+                return entity.ToList();
+            }
+        }
+
+        public IEnumerable<DailyLogListItem> GetDailyLogByStarStatus(string search)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                    .DailyLogs.Where(d => d.IsStarred == true)
+                    .Select(d => new DailyLogListItem
+                    {
+                        DailyLogId = d.DailyLogId,
+                        ProfileId = d.ProfileId,
+                        SectionId = d.SectionId,
+                        Date = d.Date,
+                        StartMile = d.StartMile,
+                        EndMile = d.EndMile,
+                        Notes = d.Notes,
+                        IsStarred = d.IsStarred,
+                        CreatedUtc = d.CreatedUtc
+                    });
+                return entity.ToList();
+            }
+        }
+
         public bool UpdateDailyLog(DailyLogEdit model)
         {
             using(var ctx = new ApplicationDbContext())

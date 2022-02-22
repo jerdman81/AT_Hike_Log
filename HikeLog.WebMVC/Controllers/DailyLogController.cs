@@ -14,11 +14,45 @@ namespace HikeLog.WebMVC.Controllers
         [Authorize]
 
         // GET: DailyLog
-        public ActionResult Index()
+        public ActionResult Index(string option, string search)
         {
             var service = CreateDailyLogService();
-            var model = service.GetDailyLogs();
-            return View(model);
+            if(option == "Miles Hiked")
+            {
+                var model = service.GetDailyLogByMilesHiked(search);
+                return View(model);
+            }
+            else if (option == "Date")
+            {
+                var model = service.GetDailyLogByDate(search);
+                return View(model);
+            }
+            else if (option == "Mile Marker")
+            {
+                var model = service.GetDailyLogByMileMarker(search);
+                return View(model);
+            }
+            else if (option == "Has Notes")
+            {
+                var model = service.GetDailyLogByHasNotes(search);
+                return View(model);
+            }
+            else if (option == "Note Content")
+            {
+                var model = service.GetDailyLogByNoteContent(search);
+                return View(model);
+            }
+            else if (option == "Starred")
+            {
+                var model = service.GetDailyLogByStarStatus(search);
+                return View(model);
+            }
+            else
+            {
+                var model = service.GetDailyLogs();
+                            return View(model);
+            }
+            
         }
 
         // GET : DailyLog
