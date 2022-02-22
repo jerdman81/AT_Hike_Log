@@ -70,6 +70,7 @@
     <Compile Include="Section\SectionDetail.cs" />
     <Compile Include="Section\SectionEdit.cs" />
     <Compile Include="Section\SectionListItem.cs" />
+    <Compile Include="Statistics\StatsDetail.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

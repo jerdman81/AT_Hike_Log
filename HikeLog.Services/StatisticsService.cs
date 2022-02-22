@@ -1,4 +1,5 @@
 ﻿using HikeLog.Data;
+using HikeLog.Models.Statistics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,23 @@ namespace HikeLog.Services
         public StatisticsService(Guid userId)
         {
             _userid = userId;
+        }
+
+        public StatsDetail GetStatsForSection(int sectionId)
+        {
+            var a = AvgMPDSectionPlan(sectionId);
+            var b = AvgMPDSectionActual(sectionId);
+            var c = AvgMPDSectionActualExclZero(sectionId);
+            var d = EstimatedDaysToCompleteSection(sectionId);
+
+            return
+                new StatsDetail
+                {
+                    AverageMPDPlan = a,
+                    AverageMPDActual = b,
+                    AverageMPDActualNoZeros = c,
+                    EstimatedDaysToComplete = d
+                };
         }
 
         public double AvgMPDSectionPlan(int sectionId)
@@ -103,9 +121,9 @@ namespace HikeLog.Services
                 else
                 {
                     var milesRemaining =
-                         Convert.ToDouble(ctx.Sections.Where(s => s.SectionId == sectionId).Select(d => d.EndMile))
+                         ctx.DailyLogs.Where(d => d.SectionId == sectionId).Min(m => m.EndMile)
                          -
-                         ctx.DailyLogs.Where(d => d.SectionId == sectionId).Min(m => m.EndMile);
+                         Convert.ToDouble(ctx.Sections.Where(s => s.SectionId == sectionId).Select(d => d.EndMile));
                     
                     var pace = AvgMPDSectionActual(sectionId);
 

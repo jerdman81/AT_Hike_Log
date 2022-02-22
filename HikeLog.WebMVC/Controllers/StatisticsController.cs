@@ -1,4 +1,6 @@
-﻿using System;
+﻿using HikeLog.Services;
+using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,9 +12,18 @@ namespace HikeLog.WebMVC.Controllers
     {
         [Authorize]
         // GET: Statistics
-        public ActionResult Index()
+        public ActionResult Details(int sectionId)
         {
-            return View();
+            var svc = CreateStatisticsService();
+            var model = svc.GetStatsForSection(sectionId);
+            return View(model);
+        }
+
+        private StatisticsService CreateStatisticsService()
+        {
+            var userId = Guid.Parse(User.Identity.GetUserId());
+            var service = new StatisticsService(userId);
+            return service;
         }
     }
 
