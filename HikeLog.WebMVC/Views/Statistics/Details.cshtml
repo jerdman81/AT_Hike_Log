@@ -1,0 +1,58 @@
+﻿@model HikeLog.Models.Statistics.StatsDetail
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>StatsDetail</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.SectionID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SectionID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AverageMPDPlan)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AverageMPDPlan)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AverageMPDActual)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AverageMPDActual)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AverageMPDActualNoZeros)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AverageMPDActualNoZeros)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EstimatedDaysToComplete)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EstimatedDaysToComplete)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

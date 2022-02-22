@@ -12,6 +12,13 @@ namespace HikeLog.WebMVC.Controllers
     {
         [Authorize]
         // GET: Statistics
+
+        public ActionResult Index(int sectionId)
+        {
+            var svc = CreateStatisticsService();
+            var model = svc.GetStatsForSection(sectionId);
+            return View(model);
+        }
         public ActionResult Details(int sectionId)
         {
             var svc = CreateStatisticsService();
