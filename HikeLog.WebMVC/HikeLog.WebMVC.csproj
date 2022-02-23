@@ -176,6 +176,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\SectionController.cs" />
+    <Compile Include="Controllers\StatisticsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -256,6 +257,7 @@
     <Content Include="Views\DailyLog\Details.cshtml" />
     <Content Include="Views\DailyLog\Edit.cshtml" />
     <Content Include="Views\DailyLog\Delete.cshtml" />
+    <Content Include="Views\Statistics\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
