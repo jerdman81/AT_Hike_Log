@@ -13,17 +13,28 @@ namespace HikeLog.WebMVC.Controllers
         [Authorize]
         // GET: Statistics
 
-        public ActionResult Index(int sectionId)
+        /*public ActionResult Index(string option, string sectionId)
         {
+            int section = Convert.ToInt32(sectionId);
             var svc = CreateStatisticsService();
-            var model = svc.GetStatsForSection(sectionId);
-            return View(model);
-        }
-        public ActionResult Details(int sectionId)
+            if( option == "Section")
+            {
+                var model = svc.GetStatsForSection(section);
+                return View(model);
+            }
+            return null;
+        }*/
+
+        public ActionResult Details(string option, string sectionId)
         {
+            int section = Convert.ToInt32(sectionId);
             var svc = CreateStatisticsService();
-            var model = svc.GetStatsForSection(sectionId);
-            return View(model);
+            if(option == "Section")
+            {
+                var model = svc.GetStatsForSection(section);
+                return View(model);
+            }
+            return View();
         }
 
         private StatisticsService CreateStatisticsService()

@@ -1,11 +1,22 @@
 ﻿@model HikeLog.Models.Statistics.StatsDetail
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Stats Index";
 }
 
-<h2>Index</h2>
+<h2>Stats Index</h2>
+<p>
+    @Html.ActionLink("Reset View", "Index")
+</p>
 
+@using (Html.BeginForm("Details", "Statistics", FormMethod.Get))
+{
+    <b>Search Option: </b>
+    @Html.RadioButton("option", "Section")<text>Section</text>
+    @*@Html.RadioButton("option", "Date")<text>Date</text>*@
+    @Html.TextBox("search")
+    <input type="submit" name="submit" value="Search" />
+}
 <div>
     <h4>StatsDetail</h4>
     <hr />

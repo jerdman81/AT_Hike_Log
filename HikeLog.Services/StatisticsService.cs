@@ -27,6 +27,7 @@ namespace HikeLog.Services
             return
                 new StatsDetail
                 {
+                    SectionID = sectionId,
                     AverageMPDPlan = a,
                     AverageMPDActual = b,
                     AverageMPDActualNoZeros = c,
@@ -36,14 +37,15 @@ namespace HikeLog.Services
 
         public double AvgMPDSectionPlan(int sectionId)
         {
+            
             using (var ctx = new ApplicationDbContext())
             {
-                var endDate = Convert.ToInt32(ctx.Sections.Where(d => d.SectionId == sectionId).Select(x => x.EndDate));
-                var startDate = Convert.ToInt32(ctx.Sections.Where(d => d.SectionId == sectionId).Select(x => x.StartDate));
+                var endDate = ctx.Sections.Where(d => d.SectionId == sectionId).Select(x => x.EndDate).FirstOrDefault();
+                var startDate = ctx.Sections.AsEnumerable().Where(d => d.SectionId == sectionId).Select(x => x.StartDate).FirstOrDefault();
 
-                int days = endDate - startDate;
+                var days = (endDate - startDate).Days+1;
 
-                var miles = Convert.ToDouble(ctx.Sections.AsEnumerable().Where(d => d.SectionId == sectionId).Select(m => m.MilesHiked));
+                var miles = ctx.Sections.AsEnumerable().Where(d => d.SectionId == sectionId).Select(m => m.MilesHiked).FirstOrDefault();
 
                 var mpd = Math.Round(miles / days, 1);
 
@@ -78,7 +80,9 @@ namespace HikeLog.Services
         {
             using (var ctx = new ApplicationDbContext())
             {
-                int days = ctx.DailyLogs.Where(d => d.SectionId == sectionId).Count(m => m.MilesHiked != 0);
+                var days = ctx.DailyLogs.AsEnumerable().Where(d => d.SectionId == sectionId).Where(m => AreMilesZero(m)).Count();
+
+                //int daysInt = Convert.ToInt32(days);
 
                 var maxMM = Convert.ToDouble(
                     Math.Max(
@@ -97,18 +101,23 @@ namespace HikeLog.Services
             }
         }
 
+        public static bool AreMilesZero(DailyLog n)
+        {
+            return n.MilesHiked != 0;
+        }
+
         public double EstimatedDaysToCompleteSection(int sectionId)
         {
             
             using (var ctx = new ApplicationDbContext())
             {
                 if (
-                    Convert.ToDouble(ctx.Sections.Where(s => s.SectionId == sectionId).Select(d => d.EndMile)) 
+                    ctx.Sections.AsEnumerable().Where(s => s.SectionId == sectionId).Select(d => d.EndMile).FirstOrDefault()
                     > 
-                    Convert.ToDouble(ctx.Sections.Where(s => s.SectionId == sectionId).Select(d => d.StartMile)))
+                    ctx.Sections.AsEnumerable().Where(s => s.SectionId == sectionId).Select(d => d.StartMile).FirstOrDefault())
                 {
                     var milesRemaining =
-                        Convert.ToDouble(ctx.Sections.Where(s => s.SectionId == sectionId).Select(d => d.EndMile))
+                        ctx.Sections.AsEnumerable().Where(s => s.SectionId == sectionId).Select(d => d.EndMile).FirstOrDefault()
                         -
                         ctx.DailyLogs.Where(d => d.SectionId == sectionId).Max(m => m.EndMile);
                     
@@ -123,7 +132,7 @@ namespace HikeLog.Services
                     var milesRemaining =
                          ctx.DailyLogs.Where(d => d.SectionId == sectionId).Min(m => m.EndMile)
                          -
-                         Convert.ToDouble(ctx.Sections.Where(s => s.SectionId == sectionId).Select(d => d.EndMile));
+                         ctx.Sections.AsEnumerable().Where(s => s.SectionId == sectionId).Select(d => d.EndMile).FirstOrDefault();
                     
                     var pace = AvgMPDSectionActual(sectionId);
 
