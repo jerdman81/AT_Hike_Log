@@ -82,8 +82,6 @@ namespace HikeLog.Services
             {
                 var days = ctx.DailyLogs.AsEnumerable().Where(d => d.SectionId == sectionId).Where(m => AreMilesZero(m)).Count();
 
-                //int daysInt = Convert.ToInt32(days);
-
                 var maxMM = Convert.ToDouble(
                     Math.Max(
                         ctx.DailyLogs.Where(d => d.SectionId == sectionId).Max(m => m.EndMile),

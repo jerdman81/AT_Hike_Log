@@ -12,19 +12,7 @@ namespace HikeLog.WebMVC.Controllers
     {
         [Authorize]
         // GET: Statistics
-
-        /*public ActionResult Index(string option, string sectionId)
-        {
-            int section = Convert.ToInt32(sectionId);
-            var svc = CreateStatisticsService();
-            if( option == "Section")
-            {
-                var model = svc.GetStatsForSection(section);
-                return View(model);
-            }
-            return null;
-        }*/
-
+                
         public ActionResult Details(string option, string sectionId)
         {
             int section = Convert.ToInt32(sectionId);

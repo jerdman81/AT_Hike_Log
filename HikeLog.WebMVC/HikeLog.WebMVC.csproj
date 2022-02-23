@@ -258,7 +258,6 @@
     <Content Include="Views\DailyLog\Edit.cshtml" />
     <Content Include="Views\DailyLog\Delete.cshtml" />
     <Content Include="Views\Statistics\Details.cshtml" />
-    <Content Include="Views\Statistics\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
