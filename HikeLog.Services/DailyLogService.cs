@@ -46,6 +46,7 @@ namespace HikeLog.Services
                 var query =
                     ctx
                         .DailyLogs
+                        .Where(u => u.Profile.UserId == _userid)
                         .Select(
                             e =>
                                 new DailyLogListItem
@@ -72,6 +73,7 @@ namespace HikeLog.Services
                 var entity =
                     ctx
                         .DailyLogs
+                        .Where(u => u.Profile.UserId == _userid)
                         .Single(e => e.DailyLogId == id);
                 return
                     new DailyLogDetail
@@ -101,6 +103,7 @@ namespace HikeLog.Services
                 var entity =
                     ctx
                     .DailyLogs.AsEnumerable()
+                    .Where(u => u.Profile.UserId == _userid)
                     .Where(d => IsMilesHiked(d, milesHiked))
                     .Select(d =>
                        new DailyLogListItem
@@ -135,6 +138,7 @@ namespace HikeLog.Services
                 var entity =
                     ctx
                     .DailyLogs.Where(d => d.Date == inputDate)
+                    .Where(u => u.Profile.UserId == _userid)
                     .Select(d => new DailyLogListItem
                     {
                         DailyLogId = d.DailyLogId,
@@ -160,7 +164,9 @@ namespace HikeLog.Services
             {
                 var entity =
                     ctx
-                    .DailyLogs.Where(d => d.EndMile >= milemarker && d.StartMile <= milemarker)
+                    .DailyLogs
+                    .Where(u => u.Profile.UserId == _userid)
+                    .Where(d => d.EndMile >= milemarker && d.StartMile <= milemarker)
                     .Select(d => new DailyLogListItem
                     {
                         DailyLogId = d.DailyLogId,
@@ -182,7 +188,9 @@ namespace HikeLog.Services
             {
                 var entity =
                     ctx
-                    .DailyLogs.Where(d => d.Notes != null)
+                    .DailyLogs
+                    .Where(u => u.Profile.UserId == _userid)
+                    .Where(d => d.Notes != null)
                     .Select(d => new DailyLogListItem
                     {
                         DailyLogId = d.DailyLogId,
@@ -204,7 +212,9 @@ namespace HikeLog.Services
             {
                 var entity =
                     ctx
-                    .DailyLogs.Where(d => d.Notes.Contains(search.ToLower()))
+                    .DailyLogs
+                    .Where(u => u.Profile.UserId == _userid)
+                    .Where(d => d.Notes.Contains(search.ToLower()))
                     .Select(d => new DailyLogListItem
                     {
                         DailyLogId = d.DailyLogId,
@@ -227,7 +237,9 @@ namespace HikeLog.Services
             {
                 var entity =
                     ctx
-                    .DailyLogs.Where(d => d.IsStarred == true)
+                    .DailyLogs
+                    .Where(u => u.Profile.UserId == _userid)
+                    .Where(d => d.IsStarred == true)
                     .Select(d => new DailyLogListItem
                     {
                         DailyLogId = d.DailyLogId,
@@ -251,6 +263,7 @@ namespace HikeLog.Services
                 var entity =
                     ctx
                         .DailyLogs
+                        .Where(u => u.Profile.UserId == _userid)
                         .Single(e => e.DailyLogId == model.DailyLogId);
 
                 entity.DailyLogId = model.DailyLogId;
@@ -274,6 +287,7 @@ namespace HikeLog.Services
                 var entity =
                     ctx
                         .DailyLogs
+                        .Where(u => u.Profile.UserId == _userid)
                         .Single(e => e.DailyLogId == dailyLogId);
 
                 ctx.DailyLogs.Remove(entity);

@@ -47,7 +47,7 @@ namespace HikeLog.Services
                 var query =
                     ctx
                         .Sections
-                       
+                        .Where(u => u.Profile.UserId == _userId)                       
                         .Select(
                             e =>
                                 new SectionListItem
@@ -74,6 +74,7 @@ namespace HikeLog.Services
                 var entity =
                     ctx
                         .Sections
+                        .Where(u => u.Profile.UserId == _userId)
                         .Single(e => e.SectionId == id);
                 return
                     new SectionDetail
@@ -98,7 +99,7 @@ namespace HikeLog.Services
             {
                 var entity =
                     ctx
-                    .Sections.Where(s => s.SectionName.ToLower().Contains(search.ToLower()) || search == null)
+                    .Sections.Where(s => s.SectionName.ToLower().Contains(search.ToLower()) || search == null).Where(u => u.Profile.UserId == _userId)
                     .Select(s => new SectionListItem
                     {
                         SectionId = s.SectionId,
@@ -121,7 +122,7 @@ namespace HikeLog.Services
             {
                 var entity =
                     ctx
-                    .Sections.Where(s => s.Direction.ToString().ToLower().Contains(search.ToLower()))
+                    .Sections.Where(s => s.Direction.ToString().ToLower().Contains(search.ToLower())).Where(u => u.Profile.UserId == _userId)
                     .Select(s => new SectionListItem
                     {
                         SectionId = s.SectionId,
@@ -147,7 +148,7 @@ namespace HikeLog.Services
                 
                 var entity =
                     ctx
-                    .Sections.Where(s => s.EndDate >= inputDate && s.StartDate <= inputDate)
+                    .Sections.Where(s => s.EndDate >= inputDate && s.StartDate <= inputDate).Where(u => u.Profile.UserId == _userId)
                     .Select(s => new SectionListItem
                     {
                         SectionId = s.SectionId,
@@ -173,7 +174,7 @@ namespace HikeLog.Services
             {
                 var entity =
                     ctx
-                    .Sections.Where(s => s.EndMile >= milemarker && s.StartMile <= milemarker)
+                    .Sections.Where(s => s.EndMile >= milemarker && s.StartMile <= milemarker).Where(u => u.Profile.UserId == _userId)
                     .Select(s => new SectionListItem
                     {
                         SectionId = s.SectionId,
@@ -197,6 +198,7 @@ namespace HikeLog.Services
                 var entity =
                     ctx
                         .Sections
+                        .Where(u => u.Profile.UserId == _userId)
                         .Single(e => e.SectionId == model.SectionId);
 
                 entity.SectionName = model.SectionName;
@@ -218,6 +220,7 @@ namespace HikeLog.Services
                 var entity =
                     ctx
                         .Sections
+                        .Where(u => u.Profile.UserId == _userId)
                         .Single(e => e.SectionId == sectionId);
 
                 ctx.Sections.Remove(entity);

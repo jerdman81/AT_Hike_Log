@@ -24,7 +24,7 @@ namespace HikeLog.Services
         {
             using (var ctx = new ApplicationDbContext())
             {
-                var query = ctx.Profiles.Single(e => e.UserId == _userId);
+                var query = ctx.Profiles.SingleOrDefault(e => e.UserId == _userId);
                 if(query != null)
                 {
                     return false;
