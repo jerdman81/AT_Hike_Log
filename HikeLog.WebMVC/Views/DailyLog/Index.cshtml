@@ -1,0 +1,122 @@
+﻿@model IEnumerable<HikeLog.Models.DailyLog.DailyLogListItem>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>DailyLog Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<p>
+    @Html.ActionLink("Reset View", "Index")
+</p>
+
+@if (TempData.ContainsKey("SaveResult"))
+{
+    <div class="alert alert-success fade in" role="alert">
+        <buton type="button" class="close" data-dismiss="alert">
+            <span>&times;</span>
+        </buton>
+        @TempData["SaveResult"]
+    </div>
+}
+
+@using (Html.BeginForm("Index", "DailyLog", FormMethod.Get))
+{
+    <b>Search Option: </b>
+
+    @Html.RadioButton("option", "Section")<text>Section</text>
+    @Html.RadioButton("option", "Miles Hiked")<text>Miles Hiked</text>
+    @Html.RadioButton("option", "Date")<text>Date</text>
+    @Html.RadioButton("option", "Mile Marker")<text>Mile Marker</text>
+    @Html.RadioButton("option", "Has Notes")<text>Has Notes</text>
+    @Html.RadioButton("option", "Note Content")<text>Note Content</text>
+    @Html.RadioButton("option", "Starred")<text>Starred</text>
+    @Html.TextBox("search")
+    <input type="submit" name="submit" value="Search" />
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.DailyLogId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProfileId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SectionId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StartMile)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EndMile)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MilesHiked)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Notes)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsStarred)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedUtc)
+        </th>
+        <th></th>
+    </tr>
+    @if (Model.Count() == 0)
+    {
+        <tr><td colspan="3"> No Records Found!</td></tr>
+    }
+    else
+    {
+        foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DailyLogId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProfileId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SectionId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartMile)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndMile)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MilesHiked)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Notes)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsStarred)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedUtc)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.DailyLogId }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.DailyLogId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.DailyLogId })
+                </td>
+            </tr>
+        }
+    }
+</table>

@@ -57,7 +57,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DailyLog\DailyLogCreate.cs" />
+    <Compile Include="DailyLog\DailyLogDetail.cs" />
+    <Compile Include="DailyLog\DailyLogEdit.cs" />
+    <Compile Include="DailyLog\DailyLogListItem.cs" />
+    <Compile Include="Profile\ProfileCreate.cs" />
+    <Compile Include="Profile\ProfileDetail.cs" />
+    <Compile Include="Profile\ProfileEdit.cs" />
+    <Compile Include="Profile\ProfileListItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Section\SectionCreate.cs" />
+    <Compile Include="Section\SectionDetail.cs" />
+    <Compile Include="Section\SectionEdit.cs" />
+    <Compile Include="Section\SectionListItem.cs" />
+    <Compile Include="Statistics\StatsDetail.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
