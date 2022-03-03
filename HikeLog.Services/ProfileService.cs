@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
+using System.Web.UI;
 
 namespace HikeLog.Services
 {
@@ -20,7 +22,14 @@ namespace HikeLog.Services
 
         public bool CreateProfile(ProfileCreate model)
         {
-            var entity =
+            using (var ctx = new ApplicationDbContext())
+            {
+                var query = ctx.Profiles.Single(e => e.UserId == _userId);
+                if(query != null)
+                {
+                    return false;
+                }
+                var entity =
                 new Profile()
                 {
                     UserId = _userId,
@@ -30,11 +39,8 @@ namespace HikeLog.Services
                     Hometown = model.Hometown,
                     CreatedUtc = DateTimeOffset.Now
                 };
-
-            using (var ctx = new ApplicationDbContext())
-            {
                 ctx.Profiles.Add(entity);
-                return ctx.SaveChanges() == 1;
+                    return ctx.SaveChanges() == 1;
             }
         }
 

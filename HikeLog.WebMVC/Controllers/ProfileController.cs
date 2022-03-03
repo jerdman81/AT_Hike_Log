@@ -1,4 +1,5 @@
-﻿using HikeLog.Models;
+﻿using HikeLog.Data;
+using HikeLog.Models;
 using HikeLog.Models.Profile;
 using HikeLog.Services;
 using Microsoft.AspNet.Identity;
