@@ -92,6 +92,37 @@ namespace HikeLog.Services
             }
         }
 
+        public IEnumerable<DailyLogListItem> GetDailyLogBySection(string search)
+        {
+            if (search == "") return GetDailyLogs();
+
+            int sectionNumber = Convert.ToInt32(search);
+
+            using (var ctx=new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                    .DailyLogs.AsEnumerable()
+                    .Where(u => u.Profile.UserId == _userid)
+                    .Where(d => d.SectionId == sectionNumber)
+                    .Select(d =>
+                       new DailyLogListItem
+                       {
+                           DailyLogId = d.DailyLogId,
+                           ProfileId = d.ProfileId,
+                           SectionId = d.SectionId,
+                           Date = d.Date,
+                           StartMile = d.StartMile,
+                           EndMile = d.EndMile,
+                           Notes = d.Notes,
+                           IsStarred = d.IsStarred,
+                           CreatedUtc = d.CreatedUtc
+                       }
+                       );
+                return entity.ToList();
+            }
+        }
+
         public IEnumerable<DailyLogListItem> GetDailyLogByMilesHiked(string search) 
         {
             if (search == "") return GetDailyLogs();
