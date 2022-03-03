@@ -17,7 +17,12 @@ namespace HikeLog.WebMVC.Controllers
         public ActionResult Index(string option, string search)
         {
             var service = CreateDailyLogService();
-            if(option == "Miles Hiked")
+            if(option == "Section")
+            {
+                var model = service.GetDailyLogBySection(search);
+                return View(model);
+            }
+            else if(option == "Miles Hiked")
             {
                 var model = service.GetDailyLogByMilesHiked(search);
                 return View(model);
